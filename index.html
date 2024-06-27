@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoundCloud Likes</title>
+</head>
+<body>
+    <h1>My SoundCloud Likes</h1>
+    <table id="tracksTable">
+        <thead>
+            <tr>
+                <th>Artist</th>
+                <th>Track</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be added here -->
+        </tbody>
+    </table>
+    <script>
+        fetch('liked_tracks.json')
+        .then(response => response.json())
+        .then(data => {
+            const table = document.getElementById('tracksTable').getElementsByTagName('tbody')[0];
+            data.forEach(track => {
+                let row = table.insertRow();
+                let cell1 = row.insertCell(0);
+                let cell2 = row.insertCell(1);
+                let cell3 = row.insertCell(2);
+                cell1.textContent = track.Artist;
+                cell2.textContent = track.Track;
+                cell3.innerHTML = `<a href="${track.Link}" target="_blank">Listen</a>`;
+            });
+        })
+        .catch(error => console.error('Error loading the data:', error));
+    </script>
+</body>
+</html>
